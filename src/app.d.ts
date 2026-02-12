@@ -8,6 +8,17 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	// Environment variables type declarations
+	namespace NodeJS {
+		interface ProcessEnv {
+			DATABASE_URL?: string;
+			NETLIFY_DATABASE_URL?: string;
+			NETLIFY?: string;
+			NETLIFY_BLOBS_CONTEXT?: string;
+			NETLIFY_SITE_ID?: string;
+		}
+	}
 }
 
 export {};

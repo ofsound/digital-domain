@@ -3,7 +3,7 @@
  *
  * Provides a unified interface for file storage that works with:
  * - Local filesystem (development)
- * - Cloudflare R2, AWS S3, Vercel Blob, etc. (production)
+ * - Netlify Blobs (production on Netlify)
  *
  * Usage:
  *   import { storage } from '$lib/storage';
@@ -22,27 +22,33 @@
  */
 
 import { LocalStorageProvider } from './providers/local';
+import { NetlifyBlobsProvider } from './providers/netlify-blobs';
 
 import type { StorageProvider } from './types';
 
-// import { R2StorageProvider } from './providers/r2'; // Future: Cloudflare R2
-// import { BlobStorageProvider } from './providers/blob'; // Future: Vercel Blob
+/**
+ * Detect if we're running in production on Netlify
+ */
+function isNetlifyProduction(): boolean {
+	// Check for Netlify environment variables
+	return !!(
+		process.env.NETLIFY ||
+		process.env.NETLIFY_BLOBS_CONTEXT ||
+		process.env.NETLIFY_SITE_ID
+	);
+}
 
-// Storage configuration
-// Change this to switch providers
-const STORAGE_PROVIDER: 'local' | 'r2' | 'blob' = 'local';
-
+/**
+ * Create the appropriate storage provider based on environment
+ */
 function createStorage(): StorageProvider {
-	switch (STORAGE_PROVIDER) {
-		case 'local':
-			return new LocalStorageProvider();
-		// case 'r2':
-		// 	return new R2StorageProvider();
-		// case 'blob':
-		// 	return new BlobStorageProvider();
-		default:
-			throw new Error(`Unknown storage provider: ${STORAGE_PROVIDER}`);
+	// Use Netlify Blobs in production on Netlify
+	if (isNetlifyProduction()) {
+		return new NetlifyBlobsProvider();
 	}
+
+	// Default to local filesystem for development and other environments
+	return new LocalStorageProvider();
 }
 
 // Singleton instance
