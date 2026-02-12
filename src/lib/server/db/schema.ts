@@ -1,5 +1,30 @@
-import { pgTable, uuid, varchar, text, integer, timestamp, index } from 'drizzle-orm/pg-core';
+import {
+	pgTable,
+	uuid,
+	varchar,
+	text,
+	integer,
+	timestamp,
+	index,
+	jsonb
+} from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
+
+/**
+ * Frequency configuration for audio reactive animations
+ */
+export interface FrequencyBandConfig {
+	name: string;
+	lowBin: number;
+	highBin: number;
+	threshold: number;
+}
+
+export interface TrackFrequencyConfig {
+	trackId: string;
+	bands: FrequencyBandConfig[];
+	fps?: number;
+}
 
 /**
  * Tracks table - Main audio tracks with metadata
@@ -13,6 +38,7 @@ export const tracks = pgTable(
 		url: text('url').notNull(), // Main audio file URL
 		description: text('description').default(''), // Rich text HTML
 		sortOrder: integer('sort_order').default(0).notNull(),
+		frequencyConfig: jsonb('frequency_config').$type<TrackFrequencyConfig | null>(), // Per-track frequency bin configuration
 		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 		updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
 	},

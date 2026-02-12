@@ -22,6 +22,7 @@ import { writable } from 'svelte/store';
 
 import { AudioEngine } from '$lib/audio/audio-engine.svelte';
 import type { AudioTrack } from '$lib/audio/playback-state';
+import { frequencyStore } from './audio-frequency-store.svelte';
 
 /**
  * Global player state
@@ -38,7 +39,12 @@ let isMaximized = $state(false);
  * Get or create the shared engine instance
  */
 function getEngine(): AudioEngine | null {
-	if (engine) return engine;
+	if (engine) {
+		// Always sync the analyser to frequency store when engine exists
+		const analyser = engine.getAnalyser();
+		frequencyStore.setAnalyser(analyser);
+		return engine;
+	}
 
 	try {
 		engine = new AudioEngine();
@@ -48,6 +54,10 @@ function getEngine(): AudioEngine | null {
 			console.error('[PlayerStore] Failed to initialize audio engine');
 			return null;
 		}
+
+		// Set analyser on frequency store after initialization
+		const analyser = engine.getAnalyser();
+		frequencyStore.setAnalyser(analyser);
 
 		return engine;
 	} catch (err) {
@@ -81,6 +91,13 @@ export const playerStore = {
 			console.error('[PlayerStore] No audio engine available');
 			return;
 		}
+
+		// Set up frequency store with first track's config if available
+		const firstTrack = tracks[0];
+		if (firstTrack) {
+			frequencyStore.setTrackId(firstTrack.id, firstTrack.frequencyConfig ?? null);
+		}
+
 		buffersLoadedStore.set(false);
 		audioEngine.loadBuffers(tracks).then(() => {
 			buffersLoadedStore.set(true);
@@ -112,21 +129,65 @@ export const playerStore = {
 	 * Go to next track
 	 */
 	nextTrack(): void {
-		getEngine()?.nextTrack();
+		const engine = getEngine();
+		if (!engine) return;
+
+		// Calculate next track index
+		let nextIndex: number;
+		if (engine.isShuffleEnabled) {
+			const unplayed = engine.tracks.map((_, i) => i).filter((i) => i !== engine.currentTrackIndex);
+			nextIndex = unplayed.length > 0 ? unplayed[Math.floor(Math.random() * unplayed.length)]! : 0;
+		} else {
+			nextIndex = Math.min(engine.currentTrackIndex + 1, engine.tracks.length - 1);
+		}
+
+		// Update frequency store config when track changes
+		const track = engine.tracks[nextIndex];
+		if (track) {
+			frequencyStore.setTrackId(track.id, track.frequencyConfig ?? null);
+		}
+
+		engine.nextTrack();
 	},
 
 	/**
 	 * Go to previous track
 	 */
 	previousTrack(): void {
-		getEngine()?.previousTrack();
+		const engine = getEngine();
+		if (!engine) return;
+
+		// Calculate previous track index
+		let prevIndex: number;
+		if (engine.isShuffleEnabled) {
+			prevIndex = Math.max(0, engine.currentTrackIndex - 1);
+		} else {
+			prevIndex = Math.max(0, engine.currentTrackIndex - 1);
+		}
+
+		// Update frequency store config when track changes
+		const track = engine.tracks[prevIndex];
+		if (track) {
+			frequencyStore.setTrackId(track.id, track.frequencyConfig ?? null);
+		}
+
+		engine.previousTrack();
 	},
 
 	/**
 	 * Start playing a specific track
 	 */
 	startTrack(index: number): void {
-		getEngine()?.startTrack(index);
+		const engine = getEngine();
+		if (!engine) return;
+
+		// Update frequency store config when track changes
+		const track = engine.tracks[index];
+		if (track) {
+			frequencyStore.setTrackId(track.id, track.frequencyConfig ?? null);
+		}
+
+		engine.startTrack(index);
 	},
 
 	/**
@@ -168,7 +229,10 @@ export const playerStore = {
 	 * Get the analyser node for visualization
 	 */
 	getAnalyser(): AnalyserNode | null {
-		return getEngine()?.getAnalyser() ?? null;
+		const analyser = getEngine()?.getAnalyser() ?? null;
+		// Update frequency store with analyser reference
+		frequencyStore.setAnalyser(analyser);
+		return analyser;
 	},
 
 	/**

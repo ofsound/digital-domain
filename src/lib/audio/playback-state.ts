@@ -16,9 +16,13 @@ export enum PlaybackState {
 	ERROR = 'error'
 }
 
+import type { TrackFrequencyConfig } from './frequency-config';
+
 /** Audio track metadata for multi-track loading */
 export interface AudioTrack {
 	id: string;
 	name: string;
 	url: string;
+	/** Optional frequency configuration for reactive animations */
+	frequencyConfig?: TrackFrequencyConfig;
 }

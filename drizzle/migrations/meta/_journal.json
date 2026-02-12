@@ -8,6 +8,13 @@
       "when": 1770876214810,
       "tag": "0000_acoustic_nebula",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770915443616,
+      "tag": "0001_special_stryfe",
+      "breakpoints": true
     }
   ]
 }
