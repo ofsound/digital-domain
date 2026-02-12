@@ -38,27 +38,3 @@ export interface StorageProvider {
 	 */
 	list(prefix?: string): Promise<string[]>;
 }
-
-export interface StorageConfig {
-	provider: 'local' | 'r2' | 'blob' | 's3';
-	local?: {
-		basePath: string;
-		baseUrl: string;
-	};
-	r2?: {
-		accountId: string;
-		accessKeyId: string;
-		secretAccessKey: string;
-		bucketName: string;
-		publicUrl: string;
-	};
-	blob?: {
-		token: string;
-	};
-	s3?: {
-		region: string;
-		accessKeyId: string;
-		secretAccessKey: string;
-		bucketName: string;
-	};
-}

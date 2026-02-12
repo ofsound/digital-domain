@@ -3,7 +3,7 @@
  * Converts to lowercase, replaces non-alphanumeric chars with hyphens
  * Removes leading/trailing hyphens
  */
-export function generateSlug(text: string): string {
+function generateSlug(text: string): string {
 	return text
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, '-')

@@ -21,10 +21,10 @@
  *   const files = await storage.list('audio/');
  */
 
+import { LocalStorageProvider } from './providers/local';
+
 import type { StorageProvider } from './types';
 
-// Import providers
-import { LocalStorageProvider } from './providers/local';
 // import { R2StorageProvider } from './providers/r2'; // Future: Cloudflare R2
 // import { BlobStorageProvider } from './providers/blob'; // Future: Vercel Blob
 

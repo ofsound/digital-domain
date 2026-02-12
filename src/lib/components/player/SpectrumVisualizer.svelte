@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	interface Props {
 		analyser: AnalyserNode | null;
 		isPlaying?: boolean;
@@ -8,7 +6,7 @@
 
 	let { analyser, isPlaying = true }: Props = $props();
 
-	let canvas: HTMLCanvasElement | undefined = $state(undefined);
+	let canvas = $state<HTMLCanvasElement | undefined>(undefined);
 	let ctx: CanvasRenderingContext2D | null = null;
 	let animationId: number | null = null;
 	let isDrawing = false;
@@ -17,16 +15,19 @@
 	let canvasWidth = $state(600);
 	let canvasHeight = $state(100);
 
-	onMount(() => {
-		if (canvas) {
-			ctx = canvas.getContext('2d');
-			setupCanvasSizing();
-		}
-		return () => {
-			stopDrawing();
-			resizeObserver?.disconnect();
+	function canvasAction(node: HTMLCanvasElement) {
+		canvas = node;
+		ctx = node.getContext('2d');
+		setupCanvasSizing();
+		return {
+			destroy() {
+				stopDrawing();
+				resizeObserver?.disconnect();
+				canvas = undefined;
+				ctx = null;
+			}
 		};
-	});
+	}
 
 	function setupCanvasSizing() {
 		if (!canvas) return;
@@ -125,5 +126,5 @@
 </script>
 
 <div class="w-full">
-	<canvas bind:this={canvas} class="bg-surface-subtle block h-[100px] w-full rounded-lg"></canvas>
+	<canvas use:canvasAction class="bg-surface-subtle block h-[100px] w-full rounded-lg"></canvas>
 </div>

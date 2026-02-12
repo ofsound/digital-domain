@@ -4,6 +4,15 @@
 
 	let progressRef = $state<HTMLDivElement | null>(null);
 
+	function progressBarAction(node: HTMLDivElement) {
+		progressRef = node;
+		return {
+			destroy() {
+				progressRef = null;
+			}
+		};
+	}
+
 	const progressPercentage = $derived(
 		playerStore.duration > 0 ? (playerStore.currentTime / playerStore.duration) * 100 : 0
 	);
@@ -80,7 +89,7 @@
 
 		<!-- Progress Bar (Clickable) -->
 		<div
-			bind:this={progressRef}
+			use:progressBarAction
 			class="hidden flex-1 cursor-pointer md:block"
 			onclick={handleProgressClick}
 			onkeydown={handleKeyDown}

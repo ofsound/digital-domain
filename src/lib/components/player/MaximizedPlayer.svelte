@@ -131,21 +131,6 @@
 <svelte:window onkeydown={handleKeyDown} />
 
 <div class="bg-surface fixed inset-0 z-50 flex flex-col">
-	<!-- Header with minimize button -->
-	<div class="border-surface-subtle flex items-center justify-between border-b px-4 py-3">
-		<h2 class="text-text-primary text-lg font-semibold">Now Playing</h2>
-		<button
-			type="button"
-			class="text-text-secondary hover:bg-surface-subtle hover:text-text-primary flex h-10 w-10 items-center justify-center rounded-full transition-colors"
-			onclick={() => playerStore.minimize()}
-			aria-label="Minimize player"
-		>
-			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-			</svg>
-		</button>
-	</div>
-
 	<!-- Error Banner -->
 	{#if playerStore.error}
 		<div class="flex items-center justify-between bg-red-500 px-4 py-3 text-white">
@@ -179,6 +164,24 @@
 			<!-- Controls Row -->
 			<div class="flex items-center justify-between">
 				<div class="flex items-center gap-2">
+					<!-- Minimize Button -->
+					<button
+						type="button"
+						class="bg-surface-subtle text-text-primary hover:bg-surface-muted flex items-center gap-2 rounded-lg px-3 py-2 transition-colors"
+						onclick={() => playerStore.minimize()}
+						aria-label="Minimize player"
+					>
+						<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 9l-7 7-7-7"
+							/>
+						</svg>
+						<span class="text-sm">Minimize</span>
+					</button>
+
 					<!-- Playlist Toggle -->
 					<button
 						onclick={() => (playlistVisible = !playlistVisible)}

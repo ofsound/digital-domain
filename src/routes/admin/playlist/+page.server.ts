@@ -1,4 +1,5 @@
 import { trackStore } from '$lib/server/db/track-store';
+
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {

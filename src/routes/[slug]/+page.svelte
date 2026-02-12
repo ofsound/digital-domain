@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { buffersLoadedStore, playerStore } from '$lib/stores/player-store.svelte';
+
 	import type { PageData } from './$types';
 
 	interface Props {
@@ -8,10 +9,9 @@
 
 	let { data }: Props = $props();
 
-	// Only skip if we've already queued the current track (allows re-queue when slug changes)
-	let lastQueuedTrackId = $state<string | null>(null);
+	// Non-reactive; avoids $effect malpractice of assigning state that would trigger re-runs
+	let lastQueuedTrackId: string | null = null;
 
-	// Reactively queue the track once tracks are loaded (use store for reliable reactivity)
 	$effect(() => {
 		if (!$buffersLoadedStore) return;
 		if (lastQueuedTrackId === data.track.id) return;

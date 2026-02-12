@@ -2,6 +2,8 @@
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 
+	let { children } = $props();
+
 	const navItems = [
 		{ href: '/admin', label: 'Dashboard' },
 		{ href: '/admin/upload', label: 'Upload' },
@@ -41,7 +43,7 @@
 	<!-- Admin Content -->
 	<main class="pt-8 pb-32">
 		<div class="mx-auto max-w-6xl px-4">
-			<slot />
+			{@render children()}
 		</div>
 	</main>
 </div>

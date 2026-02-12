@@ -5,12 +5,14 @@
  * Provides CRUD operations for tracks with their images and additional audio files.
  */
 
-import { db } from './index';
-import { tracks, trackImages, trackAudioFiles, type Track, type NewTrack } from './schema';
 import { eq, asc, desc } from 'drizzle-orm';
+
 import { storage } from '$lib/storage';
 
-export interface TrackWithRelations extends Track {
+import { db } from './index';
+import { tracks, trackImages, trackAudioFiles, type Track, type NewTrack } from './schema';
+
+interface TrackWithRelations extends Track {
 	images: (typeof trackImages.$inferSelect)[];
 	audioFiles: (typeof trackAudioFiles.$inferSelect)[];
 }

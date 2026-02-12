@@ -1,6 +1,8 @@
+import { DATABASE_URL } from '$env/static/private';
+
 import { neon, type NeonQueryFunction } from '@neondatabase/serverless';
 import { drizzle, type NeonHttpDatabase } from 'drizzle-orm/neon-http';
-import { DATABASE_URL } from '$env/static/private';
+
 import * as schema from './schema';
 
 let dbInstance: NeonHttpDatabase<typeof schema> | null = null;
@@ -16,7 +18,7 @@ function getSql() {
 	return sqlInstance;
 }
 
-export function getDb(): NeonHttpDatabase<typeof schema> {
+function getDb(): NeonHttpDatabase<typeof schema> {
 	if (!dbInstance) {
 		dbInstance = drizzle(getSql(), { schema });
 	}

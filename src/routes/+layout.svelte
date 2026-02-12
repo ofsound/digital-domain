@@ -1,8 +1,10 @@
 <script lang="ts">
-	import './layout.css';
-	import favicon from '$lib/assets/favicon.svg';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import { PersistentPlayer } from '$lib/components/player';
+
+	import favicon from '$lib/assets/favicon.svg';
+
+	import './layout.css';
 
 	let { children, data } = $props();
 

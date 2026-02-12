@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Image from '@tiptap/extension-image';
@@ -14,12 +13,11 @@
 
 	let { content = '', placeholder = 'Write something...', onChange }: Props = $props();
 
-	let element: HTMLDivElement;
 	let editor: Editor | null = $state(null);
 
-	onMount(() => {
+	function editorAction(node: HTMLDivElement) {
 		editor = new Editor({
-			element: element,
+			element: node,
 			extensions: [
 				StarterKit,
 				Image,
@@ -35,11 +33,12 @@
 				onChange?.(editor.getHTML());
 			}
 		});
-	});
-
-	onDestroy(() => {
-		editor?.destroy();
-	});
+		return {
+			destroy() {
+				editor?.destroy();
+			}
+		};
+	}
 
 	function toggleBold() {
 		editor?.chain().focus().toggleBold().run();
@@ -172,7 +171,7 @@
 
 	<!-- Editor Content -->
 	<div
-		bind:this={element}
+		use:editorAction
 		class="prose prose-sm dark:prose-invert min-h-[200px] max-w-none p-4 focus:outline-none"
 	></div>
 </div>

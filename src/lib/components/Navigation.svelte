@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
+
 	import { playerStore } from '$lib/stores/player-store.svelte';
 
 	const navItems = [
@@ -16,7 +17,7 @@
 >
 	<div class="mx-auto max-w-6xl px-4">
 		<div class="flex h-16 items-center justify-between">
-			<a href={resolve('/')} class="text-text-primary text-xl font-bold">Digital Domain</a>
+			<a href={resolve('/')} class="text-text-primary hidden text-xl font-bold">Digital Domain</a>
 
 			<div class="flex items-center gap-6">
 				{#each navItems as item (item.href)}

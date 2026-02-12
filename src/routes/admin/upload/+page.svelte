@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { resolve } from '$app/paths';
-	import type { ActionData } from './$types';
+
 	import RichTextEditor from '$lib/components/RichTextEditor.svelte';
+
+	import type { ActionData } from './$types';
 
 	interface Props {
 		form: ActionData;
