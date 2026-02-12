@@ -21,6 +21,7 @@
  *   const files = await storage.list('audio/');
  */
 
+import { env } from '$env/dynamic/private';
 import { LocalStorageProvider } from './providers/local';
 import { NetlifyBlobsProvider } from './providers/netlify-blobs';
 
@@ -28,14 +29,11 @@ import type { StorageProvider } from './types';
 
 /**
  * Detect if we're running in production on Netlify
+ * Uses SvelteKit's env import for proper runtime detection
  */
 function isNetlifyProduction(): boolean {
-	// Check for Netlify environment variables
-	return !!(
-		process.env.NETLIFY ||
-		process.env.NETLIFY_BLOBS_CONTEXT ||
-		process.env.NETLIFY_SITE_ID
-	);
+	// Check for Netlify environment variables at runtime
+	return !!(env.NETLIFY || env.NETLIFY_BLOBS_CONTEXT || env.NETLIFY_SITE_ID);
 }
 
 /**
