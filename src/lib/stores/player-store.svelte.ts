@@ -18,6 +18,8 @@
  *   playerStore.nextTrack();
  */
 
+import { writable } from 'svelte/store';
+
 import { AudioEngine } from '$lib/audio/audio-engine.svelte';
 import type { AudioTrack } from '$lib/audio/playback-state';
 
@@ -25,6 +27,9 @@ import type { AudioTrack } from '$lib/audio/playback-state';
  * Global player state
  */
 let engine: AudioEngine | null = null;
+
+/** Svelte store for reliable reactivity when buffers finish loading */
+export const buffersLoadedStore = writable(false);
 
 /** Whether the player is maximized (showing full playlist) or minimized */
 let isMaximized = $state(false);
@@ -76,7 +81,10 @@ export const playerStore = {
 			console.error('[PlayerStore] No audio engine available');
 			return;
 		}
-		audioEngine.loadBuffers(tracks);
+		buffersLoadedStore.set(false);
+		audioEngine.loadBuffers(tracks).then(() => {
+			buffersLoadedStore.set(true);
+		});
 	},
 
 	/**
@@ -167,7 +175,7 @@ export const playerStore = {
 	 * Get the current track metadata
 	 */
 	get currentTrack(): AudioTrack | null {
-		return getEngine()?.getCurrentTrack() ?? null;
+		return getEngine()?.currentTrack ?? null;
 	},
 
 	/**

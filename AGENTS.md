@@ -79,10 +79,14 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 For Svelte 5 / SvelteKit work, use the Svelte MCP server (server name: `svelte`). Project-specific rules — autofixer usage, runes, Tailwind, import order, post-edit checks — are in `.cursor/rules/`.
 
-## Drizzle / Drizzle-Kit / Database Migrations
+## Drizzle / Database
 
-Step 1. Edit Code – Define the desired state in TypeScript (schema)
-Step 2. npm db:generate – Create the SQL "plan" for the changes.
-Step 3. npm db:generate – Apply that plan to the actual databas
+Never run drizzle-kit commands that require interactive confirmation. Provide the exact command and instructions for the user to run manually.
 
-Warning: Never manually edit the files inside the drizzle meta folder; always let the CLI handle those snapshots to avoid "out of sync" errors.
+** Important, never manually create .sql files in /drizzle/migrations/ **
+
+** Instead Update the .schema files, and then drizzle-kit generate **
+
+** Important, never run drizzle-kit migrate **
+
+** ALWAYS prompt me to run drizzle-kit migrate **

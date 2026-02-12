@@ -973,11 +973,12 @@ export class AudioEngine {
 
 	/**
 	 * Queue a specific track by index (set as current without playing).
+	 * When not playing, updates immediately so the UI shows the correct track without delay.
 	 */
 	queueTrack(index: number): void {
 		if (index < 0 || index >= this.buffers.length) return;
 
-		this.fadeOut(() => {
+		const runUpdate = (): void => {
 			this.currentTrackIndex = index;
 			this.currentTime = 0;
 			this.isPlaying = false;
@@ -990,7 +991,13 @@ export class AudioEngine {
 				// Track is armed and ready, but don't start playing
 				this.sourceHasStarted = false;
 			});
-		});
+		};
+
+		if (!this.isPlaying) {
+			runUpdate();
+		} else {
+			this.fadeOut(runUpdate);
+		}
 	}
 
 	/**
@@ -1152,7 +1159,7 @@ export class AudioEngine {
 	/**
 	 * Get metadata for the currently playing track.
 	 */
-	getCurrentTrack(): AudioTrack | null {
+	get currentTrack(): AudioTrack | null {
 		return this.tracks[this.currentTrackIndex] ?? null;
 	}
 
