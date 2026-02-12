@@ -1,3 +1,9 @@
+## On Session Start (For Open Code & Kimi)
+
+1. Read all `.cursor/rules/*.mdc` files
+2. For any Svelte/SvelteKit work: run `svelte-autofixer` before finalizing code
+3. Block task completion until autofixer returns clean
+
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
 **Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
