@@ -17,6 +17,7 @@ declare global {
 			NETLIFY?: string;
 			NETLIFY_BLOBS_CONTEXT?: string;
 			NETLIFY_SITE_ID?: string;
+			NETLIFY_API_TOKEN?: string;
 		}
 	}
 }

@@ -3,12 +3,10 @@
  *
  * Stores files using Netlify Blobs (production environment).
  * Requires @netlify/blobs package.
- *
- * Blobs are accessed via Netlify Functions/Edge Functions with automatic
- * environment configuration. No manual token setup needed when running on Netlify.
  */
 
-import { getStore } from '@netlify/blobs';
+import { getStore, type GetStoreOptions } from '@netlify/blobs';
+import { env } from '$env/dynamic/private';
 
 import type { StorageProvider } from '../types';
 
@@ -18,18 +16,75 @@ const STORES = {
 	images: 'images'
 } as const;
 
+/**
+ * Parse NETLIFY_BLOBS_CONTEXT if available
+ */
+function parseBlobsContext(): Partial<GetStoreOptions> | null {
+	const context = env.NETLIFY_BLOBS_CONTEXT;
+	if (!context) return null;
+
+	try {
+		const decoded = Buffer.from(context, 'base64').toString('utf-8');
+		const config = JSON.parse(decoded);
+		return {
+			apiURL: config.apiURL,
+			edgeURL: config.edgeURL,
+			token: config.token,
+			siteID: config.siteID
+		};
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Get store configuration from environment
+ */
+function getStoreConfig(): Partial<GetStoreOptions> {
+	// Try NETLIFY_BLOBS_CONTEXT first
+	const contextConfig = parseBlobsContext();
+	if (contextConfig) {
+		console.log('[NetlifyBlobs] Using NETLIFY_BLOBS_CONTEXT configuration');
+		return contextConfig;
+	}
+
+	// Fall back to individual env vars
+	if (env.NETLIFY_SITE_ID && env.NETLIFY_API_TOKEN) {
+		console.log('[NetlifyBlobs] Using individual env vars configuration');
+		return {
+			siteID: env.NETLIFY_SITE_ID,
+			token: env.NETLIFY_API_TOKEN,
+			apiURL: 'https://api.netlify.com'
+		};
+	}
+
+	// Empty config - let @netlify/blobs try to auto-detect
+	console.log('[NetlifyBlobs] Using auto-detection');
+	return {};
+}
+
 export class NetlifyBlobsProvider implements StorageProvider {
+	private storeConfig: Partial<GetStoreOptions>;
+
+	constructor() {
+		this.storeConfig = getStoreConfig();
+		console.log(
+			'[NetlifyBlobs] Store config keys:',
+			Object.keys(this.storeConfig).join(', ') || 'none (auto-detect)'
+		);
+	}
+
 	private getAudioStore() {
 		return getStore({
-			name: STORES.audio
-			// Configuration is automatically read from environment when on Netlify
-			// No explicit token/siteID needed in production
+			name: STORES.audio,
+			...this.storeConfig
 		});
 	}
 
 	private getImagesStore() {
 		return getStore({
-			name: STORES.images
+			name: STORES.images,
+			...this.storeConfig
 		});
 	}
 
@@ -43,13 +98,8 @@ export class NetlifyBlobsProvider implements StorageProvider {
 
 	/**
 	 * Get the public URL for a file
-	 * Note: Netlify Blobs URLs are signed and temporary by default.
-	 * For permanent public access, we use a different approach.
 	 */
 	getPublicUrl(path: string): string {
-		// Netlify Blobs doesn't have a permanent public URL by default
-		// We'll serve files through a Netlify Function that proxies to Blobs
-		// This allows us to use permanent URLs like /api/files/{path}
 		const cleanPath = path.replace(/^\//, '');
 		return `/api/files/${cleanPath}`;
 	}
@@ -116,8 +166,6 @@ export class NetlifyBlobsProvider implements StorageProvider {
 
 	/**
 	 * List files in a directory/prefix
-	 * Note: Netlify Blobs doesn't support true directory listing,
-	 * so we use the list() method with a prefix filter
 	 */
 	async list(prefix: string = ''): Promise<string[]> {
 		const store = this.getStoreForPath(prefix || 'audio/');
