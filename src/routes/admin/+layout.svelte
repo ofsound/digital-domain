@@ -8,7 +8,7 @@
 		{ href: '/admin', label: 'Dashboard' },
 		{ href: '/admin/upload', label: 'Upload' },
 		{ href: '/admin/playlist', label: 'Playlist' }
-	];
+	] as const;
 </script>
 
 <div class="bg-surface min-h-screen">
@@ -20,16 +20,14 @@
 					<a href={resolve('/admin')} class="text-text-primary text-xl font-bold">Admin</a>
 					<div class="flex gap-4">
 						{#each navItems as item (item.href)}
-							<!-- eslint-disable svelte/no-navigation-without-resolve -->
 							<a
-								href={item.href}
+								href={resolve(item.href)}
 								class="text-sm font-medium transition-colors {page.url.pathname === item.href
 									? 'text-violet-600'
 									: 'text-text-secondary hover:text-text-primary'}"
 							>
 								{item.label}
 							</a>
-							<!-- eslint-enable svelte/no-navigation-without-resolve -->
 						{/each}
 					</div>
 				</div>

@@ -9,7 +9,7 @@
 		{ href: '/photos', label: 'Photos' },
 		{ href: '/artwork', label: 'Artwork' },
 		{ href: '/contact', label: 'Contact' }
-	];
+	] as const;
 </script>
 
 <nav
@@ -21,9 +21,8 @@
 
 			<div class="flex items-center gap-6">
 				{#each navItems as item (item.href)}
-					<!-- eslint-disable svelte/no-navigation-without-resolve -->
 					<a
-						href={item.href}
+						href={resolve(item.href)}
 						onclick={() => {
 							// When navigating to non-player pages, minimize the player
 							if (item.href !== '/') {
@@ -36,7 +35,6 @@
 					>
 						{item.label}
 					</a>
-					<!-- eslint-enable svelte/no-navigation-without-resolve -->
 				{/each}
 			</div>
 		</div>
