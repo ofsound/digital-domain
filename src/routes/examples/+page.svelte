@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { resolve } from '$app/paths';
 	import { playerStore } from '$lib/stores/player-store.svelte';
 
 	/**
@@ -16,88 +17,13 @@
 		playerStore.getAnalyser();
 		isAudioInitialized = true;
 	});
-
-	const examples = [
-		{
-			path: '/animation',
-			title: 'Frequency Animation Demo',
-			description:
-				'The foundational example demonstrating real-time frequency bin analysis with GSAP animations. Watch as four frequency bands trigger visual animations when crossing their thresholds, with lightning bolt icons that move and pulse to the beat.',
-			features: ['Threshold detection', 'GSAP animations', 'Real-time metrics'],
-			color: 'from-blue-500 to-cyan-500'
-		},
-		{
-			path: '/reactive-typography',
-			title: 'Reactive Typography',
-			description:
-				'Text that breathes, pulses, and transforms with the music. Giant letterforms scale and glow with bass frequencies while letter-spacing expands on rhythmic hits. Features continuous waveform visualization and dynamic text shadows.',
-			features: ['Text scaling', 'Dynamic spacing', 'Glow effects'],
-			color: 'from-purple-500 to-pink-500'
-		},
-		{
-			path: '/elements-shifting',
-			title: 'Elements Shifting',
-			description:
-				'A 3D field of geometric shapes that shift, rotate, and transform based on audio frequencies. An 8x8 grid of prismatic forms creates an organic, breathing landscape with ripple effects and rotation waves triggered by the music.',
-			features: ['3D grid', 'Geometric forms', 'Ripple effects'],
-			color: 'from-violet-500 to-purple-500'
-		},
-		{
-			path: '/particle-system',
-			title: 'Particle System',
-			description:
-				'Canvas-based particle explosions that burst, flow, and create trails based on audio frequencies. Features 800 particles with physics, screen shake on bass drops, and ring-shaped emissions that respond to the music.',
-			features: ['800 particles', 'Physics simulation', 'Explosion effects'],
-			color: 'from-pink-500 to-rose-500'
-		},
-		{
-			path: '/micro-animations',
-			title: 'Micro Animations',
-			description:
-				'Subtle, elegant UI micro-interactions that respond to audio frequencies. Cards pulse, buttons ripple, progress bars dance, and circular indicators animate when thresholds are crossed. Demonstrates audio-enhanced user interfaces.',
-			features: ['UI cards', 'Progress bars', 'Button effects'],
-			color: 'from-indigo-500 to-blue-500'
-		},
-		{
-			path: '/typography-heartbeat',
-			title: 'Typography Heartbeat',
-			description:
-				"Variable font typography that pulses with the music's heartbeat. Bass frequencies drive font-weight from 300 to 900, creating text that physically thickens with the kick drum. Features an EKG visualization and BPM counter.",
-			features: ['Variable fonts', 'Font-weight animation', 'EKG visualization'],
-			color: 'from-emerald-500 to-teal-500'
-		},
-		{
-			path: '/liquid-grid',
-			title: 'Liquid Grid',
-			description:
-				'A complex nested CSS grid layout that breathes and shifts with the music. Columns, rows, and gaps dynamically resize based on audio—expanding during intense passages and contracting during quiet sections. Hidden panels reveal during high energy.',
-			features: ['Adaptive grid', 'Dynamic columns', 'Hidden panels'],
-			color: 'from-amber-500 to-orange-500'
-		},
-		{
-			path: '/color-schemes',
-			title: 'Color Schemes',
-			description:
-				"A synesthetic experience where audio frequencies dictate the entire site's color palette. Bass maps to warm reds, mids to neon cyans, and overall energy controls saturation. The entire UI becomes a living, breathing color field.",
-			features: ['Synesthetic colors', 'HSL mapping', 'Color history'],
-			color: 'from-rose-500 to-red-500'
-		},
-		{
-			path: '/reactive-physics',
-			title: 'Reactive Physics',
-			description:
-				'Matter.js physics simulation where UI elements react to audio with realistic forces. Buttons and cards experience explosive scatter on snare hits, heavy gravity on bass drops, inverse gravity on melodies, and slippery friction on sub-bass.',
-			features: ['Matter.js physics', 'Explosive forces', 'Interactive bodies'],
-			color: 'from-cyan-500 to-blue-500'
-		}
-	];
 </script>
 
 <svelte:head>
 	<title>Audio-Reactive Examples</title>
 	<meta
 		name="description"
-		content="Showcase of 9 audio-reactive experiences built with frequency analysis"
+		content="Showcase of 11 audio-reactive experiences built with frequency analysis"
 	/>
 </svelte:head>
 
@@ -125,7 +51,7 @@
 			</h1>
 
 			<p class="mx-auto max-w-2xl text-lg leading-relaxed text-white/60 md:text-xl">
-				Nine unique explorations of real-time audio frequency analysis. Each example demonstrates
+				Eleven unique explorations of real-time audio frequency analysis. Each example demonstrates
 				different ways to visualize, animate, and interact with music.
 			</p>
 
@@ -150,87 +76,768 @@
 	<main class="px-8 pb-20">
 		<div class="mx-auto max-w-7xl">
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each examples as example, i (example.path)}
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-					<a
-						href={example.path}
-						class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				<!-- Example 1: Frequency Animation Demo -->
+				<a
+					href={resolve('/animation')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
 					>
-						<!-- Gradient accent -->
+						1
+					</div>
+					<div class="relative">
 						<div
-							class="absolute inset-0 bg-gradient-to-br {example.color} opacity-0 transition-opacity duration-300 group-hover:opacity-10"
-						></div>
-
-						<!-- Number badge -->
-						<div
-							class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 transition-transform duration-300 group-hover:scale-110"
 						>
-							{i + 1}
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+								/></svg
+							>
 						</div>
-
-						<div class="relative">
-							<!-- Icon placeholder -->
-							<div
-								class="h-12 w-12 rounded-xl bg-gradient-to-br {example.color} mb-4 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+						<h2
+							class="mb-2 from-blue-500 to-cyan-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Frequency Animation Demo
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							The foundational example demonstrating real-time frequency bin analysis with GSAP
+							animations. Watch as four frequency bands trigger visual animations when crossing
+							their thresholds, with lightning bolt icons that move and pulse to the beat.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Threshold detection</span
 							>
-								<svg
-									class="h-6 w-6 text-white"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-									/>
-								</svg>
-							</div>
-
-							<h2
-								class="mb-2 text-xl font-bold group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent {example.color} transition-all duration-300"
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>GSAP animations</span
 							>
-								{example.title}
-							</h2>
-
-							<p class="mb-4 text-sm leading-relaxed text-white/50">
-								{example.description}
-							</p>
-
-							<!-- Features -->
-							<div class="flex flex-wrap gap-2">
-								{#each example.features as feature (feature)}
-									<span
-										class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
-									>
-										{feature}
-									</span>
-								{/each}
-							</div>
-
-							<!-- Arrow indicator -->
-							<div
-								class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Real-time metrics</span
 							>
-								<span>Explore</span>
-								<svg
-									class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M9 5l7 7-7 7"
-									/>
-								</svg>
-							</div>
 						</div>
-					</a>
-				{/each}
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 2: Reactive Typography -->
+				<a
+					href={resolve('/reactive-typography')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						2
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 6h16M4 12h16M4 18h7"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-purple-500 to-pink-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Reactive Typography
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Text that breathes, pulses, and transforms with the music. Giant letterforms scale and
+							glow with bass frequencies while letter-spacing expands on rhythmic hits. Features
+							continuous waveform visualization and dynamic text shadows.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Text scaling</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Dynamic spacing</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Glow effects</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 3: Elements Shifting -->
+				<a
+					href={resolve('/elements-shifting')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-violet-500 to-purple-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						3
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-violet-500 to-purple-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Elements Shifting
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							A 3D field of geometric shapes that shift, rotate, and transform based on audio
+							frequencies. An 8x8 grid of prismatic forms creates an organic, breathing landscape
+							with ripple effects and rotation waves triggered by the music.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>3D grid</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Geometric forms</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Ripple effects</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 4: Particle System -->
+				<a
+					href={resolve('/particle-system')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-pink-500 to-rose-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						4
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-pink-500 to-rose-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Particle System
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Canvas-based particle explosions that burst, flow, and create trails based on audio
+							frequencies. Features 800 particles with physics, screen shake on bass drops, and
+							ring-shaped emissions that respond to the music.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>800 particles</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Physics simulation</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Explosion effects</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 5: Micro Animations -->
+				<a
+					href={resolve('/micro-animations')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						5
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-indigo-500 to-blue-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Micro Animations
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Subtle, elegant UI micro-interactions that respond to audio frequencies. Cards pulse,
+							buttons ripple, progress bars dance, and circular indicators animate when thresholds
+							are crossed. Demonstrates audio-enhanced user interfaces.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>UI cards</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Progress bars</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Button effects</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 6: Typography Heartbeat -->
+				<a
+					href={resolve('/typography-heartbeat')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						6
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-emerald-500 to-teal-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Typography Heartbeat
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Variable font typography that pulses with the music's heartbeat. Bass frequencies
+							drive font-weight from 300 to 900, creating text that physically thickens with the
+							kick drum. Features an EKG visualization and BPM counter.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Variable fonts</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Font-weight animation</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>EKG visualization</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 7: Liquid Grid -->
+				<a
+					href={resolve('/liquid-grid')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						7
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-amber-500 to-orange-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Liquid Grid
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							A complex nested CSS grid layout that breathes and shifts with the music. Columns,
+							rows, and gaps dynamically resize based on audio—expanding during intense passages and
+							contracting during quiet sections. Hidden panels reveal during high energy.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Adaptive grid</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Dynamic columns</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Hidden panels</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 8: Color Schemes -->
+				<a
+					href={resolve('/color-schemes')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-rose-500 to-red-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						8
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 to-red-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-rose-500 to-red-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Color Schemes
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							A synesthetic experience where audio frequencies dictate the entire site's color
+							palette. Bass maps to warm reds, mids to neon cyans, and overall energy controls
+							saturation. The entire UI becomes a living, breathing color field.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Synesthetic colors</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>HSL mapping</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Color history</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 9: Reactive Physics -->
+				<a
+					href={resolve('/reactive-physics')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						9
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-cyan-500 to-blue-500 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Reactive Physics
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Matter.js physics simulation where UI elements react to audio with realistic forces.
+							Buttons and cards experience explosive scatter on snare hits, heavy gravity on bass
+							drops, inverse gravity on melodies, and slippery friction on sub-bass.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Matter.js physics</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Explosive forces</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Interactive bodies</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 10: Composer Idea One - The Spotlight -->
+				<a
+					href={resolve('/composer-idea-one')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-600 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						10
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+								/><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-amber-500 to-orange-600 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							The Spotlight
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Editorial content revealed through an audio-driven circular spotlight mask. Heavy use
+							of threshold exit events for a breathing aperture that expands on bass and contracts
+							on release.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Clip-path mask</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Exit events</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Editorial layout</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 11: Composer Idea Two - Fluid Blob Borders -->
+				<a
+					href={resolve('/composer-idea-two')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-fuchsia-500 to-violet-600 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						11
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-600 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-fuchsia-500 to-violet-600 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Fluid Blob Borders
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Dashboard panels with blob-shaped clip-path borders. Polygon points mapped to bands
+							via index mod 4; simplex noise adds organic drift modulated by audio energy.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Simplex noise</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>lowBin/highBin</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Composer UI</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
 			</div>
 		</div>
 	</main>
