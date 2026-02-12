@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Project Context
 
-- **Stack**: Svelte 5, SvelteKit, TypeScript, Tailwind CSS, Neon Postgres, Neon Auth
+- **Stack**: Svelte 5, SvelteKit, TypeScript, Tailwind CSS, Neon Postgres, BetteAuth
 - **Styling**: Tailwind only; avoid vanilla CSS in `<style>` blocks
 
 ## Svelte MCP Tools
