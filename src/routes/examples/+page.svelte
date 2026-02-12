@@ -6,7 +6,7 @@
 	/**
 	 * Examples Landing Page
 	 *
-	 * A showcase of all 9 audio-reactive experiences built with the frequency store.
+	 * A showcase of all 17 audio-reactive experiences built with the frequency store.
 	 * Each example demonstrates different ways to visualize and interact with audio data.
 	 */
 
@@ -23,7 +23,7 @@
 	<title>Audio-Reactive Examples</title>
 	<meta
 		name="description"
-		content="Showcase of 11 audio-reactive experiences built with frequency analysis"
+		content="Showcase of 17 audio-reactive experiences built with frequency analysis"
 	/>
 </svelte:head>
 
@@ -51,8 +51,8 @@
 			</h1>
 
 			<p class="mx-auto max-w-2xl text-lg leading-relaxed text-white/60 md:text-xl">
-				Eleven unique explorations of real-time audio frequency analysis. Each example demonstrates
-				different ways to visualize, animate, and interact with music.
+				Seventeen unique explorations of real-time audio frequency analysis. Each example
+				demonstrates different ways to visualize, animate, and interact with music.
 			</p>
 
 			<div class="mt-8 flex flex-wrap justify-center gap-4 text-sm text-white/40">
@@ -838,6 +838,420 @@
 						</div>
 					</div>
 				</a>
+
+				<!-- Example 12: Three.js One - Kinetic Monolith Field -->
+				<a
+					href={resolve('/three-js-one')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-sky-500 to-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						12
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M3 7h18M6 7v13m6-13v13m6-13v13M4 20h16"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-sky-500 to-blue-600 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Three.js One
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Kinetic monolith field with instanced 3D geometry that ripples to sub-bass and bass.
+							Low-mid adds lattice twist while mid frequencies push emissive shimmer and kick
+							pulses.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Instanced mesh</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Pulsing rings</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Camera drift</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 13: Three.js Two - Prism Swarm Orbit -->
+				<a
+					href={resolve('/three-js-two')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-cyan-500 to-indigo-600 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						13
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-indigo-600 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M12 2l3.5 7 7.5 1-5.5 5.5 1.5 7.5L12 19l-7 4 1.5-7.5L1 10l7.5-1L12 2z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-cyan-500 to-indigo-600 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Three.js Two
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Prism swarm orbit with additive glitter, bloom, and afterimage trails. Bass breathes
+							orbital shells, low-mid modulates precession, and mid bursts create high-energy flare
+							cones.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Postprocessing</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Swarm orbit</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Glitter field</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 14: Three.js/Three - Audio Tunnel Cathedral -->
+				<a
+					href={resolve('/three-js/three')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-violet-500 to-indigo-700 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						14
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-700 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 12h16M12 4v16M5.5 5.5l13 13M18.5 5.5l-13 13"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-violet-500 to-indigo-700 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Three.js / Three
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							A tunnel cathedral with forward camera travel, filament strobes, and pulse walls.
+							Sub-bass and bass reshape tunnel radius while low-mid bends curvature and mid sharpens
+							strobing detail.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Tunnel traversal</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Film grain</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Pulse walls</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 15: Three.js Four - Resonant Core Bloom -->
+				<a
+					href={resolve('/three-js-four')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-700 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						15
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-700 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M12 3l2.8 5.8L21 10l-4.5 4.4L17.5 21 12 18.1 6.5 21l1-6.6L3 10l6.2-1.2L12 3z"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-cyan-500 to-blue-700 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Three.js Four
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Resonant Core Bloom: a deforming geodesic membrane with torus petals and shell-wave
+							bursts on kick hits. Mid frequencies inject shimmer while low-mid drives rotational
+							topology turbulence.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Membrane warp</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Shell pulses</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Additive bloom look</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 16: Three.js Five - Caustic Tide Stage -->
+				<a
+					href={resolve('/three-js-five')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-teal-500 to-emerald-700 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						16
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-emerald-700 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M3 15c3-5 5-7 9-7s6 2 9 7M4 19h16M7 11l2 2m8-2l-2 2"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-teal-500 to-emerald-700 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Three.js Five
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Caustic Tide Stage: an audio-driven water plane with crystal buoys, foam drift, and
+							radial surface ripples. Bass shapes swell amplitude, low-mid adds chop, and mid
+							frequencies color-shift caustic highlights.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Water displacement</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Instanced buoys</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Ripple bursts</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
+
+				<!-- Example 17: Three.js Six - Pendulum Atrium -->
+				<a
+					href={resolve('/three-js-six')}
+					class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10 hover:shadow-2xl"
+				>
+					<div
+						class="absolute inset-0 bg-gradient-to-br from-fuchsia-500 to-pink-700 opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+					></div>
+					<div
+						class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/40 transition-colors group-hover:bg-white/20 group-hover:text-white/60"
+					>
+						17
+					</div>
+					<div class="relative">
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-700 transition-transform duration-300 group-hover:scale-110"
+						>
+							<svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M12 2v6m0 0c3 0 5 2 5 5s-2 5-5 5-5-2-5-5 2-5 5-5zm0 10v4m-6 0h12"
+								/></svg
+							>
+						</div>
+						<h2
+							class="mb-2 from-fuchsia-500 to-pink-700 text-xl font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent"
+						>
+							Three.js Six
+						</h2>
+						<p class="mb-4 text-sm leading-relaxed text-white/50">
+							Pendulum Atrium: a kinetic hall of suspended bobs and tension lines driven by rhythmic
+							swing physics. Bass expands arc amplitude, low-mid modulates wave phase, and mid
+							impacts trigger spark cascades.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Pendulum lattice</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>String dynamics</span
+							>
+							<span
+								class="rounded-full border border-white/5 bg-white/5 px-2 py-1 text-xs text-white/40"
+								>Spark bursts</span
+							>
+						</div>
+						<div
+							class="mt-4 flex items-center text-sm text-white/30 transition-colors group-hover:text-white/60"
+						>
+							<span>Explore</span><svg
+								class="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 5l7 7-7 7"
+								/></svg
+							>
+						</div>
+					</div>
+				</a>
 			</div>
 		</div>
 	</main>
@@ -847,7 +1261,8 @@
 		<div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 md:flex-row">
 			<div class="text-sm text-white/40">
 				Built with <span class="text-white/60">Svelte 5</span>,
-				<span class="text-white/60">GSAP</span>, <span class="text-white/60">Matter.js</span>, and
+				<span class="text-white/60">GSAP</span>, <span class="text-white/60">Matter.js</span>,
+				<span class="text-white/60">Three.js</span>, and
 				<span class="text-white/60">Web Audio API</span>
 			</div>
 			<div class="flex items-center gap-4 text-sm text-white/40">

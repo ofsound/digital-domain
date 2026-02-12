@@ -8,10 +8,11 @@
 
 	let { data }: Props = $props();
 
-	// Use $derived to make tracks reactive to data changes
-	let tracks = $derived(data.tracks);
+	let tracks = $derived([...data.tracks]);
 	let editingTrack: string | null = $state(null);
 	let editName = $state('');
+	let reorderError: string | null = $state(null);
+	let isSavingOrder = $state(false);
 
 	function startEdit(track: { id: string; name: string }) {
 		editingTrack = track.id;
@@ -19,10 +20,7 @@
 	}
 
 	function saveEdit(trackId: string) {
-		const track = tracks.find((t) => t.id === trackId);
-		if (track) {
-			track.name = editName;
-		}
+		tracks = tracks.map((track) => (track.id === trackId ? { ...track, name: editName } : track));
 		editingTrack = null;
 	}
 
@@ -35,14 +33,43 @@
 		tracks = tracks.filter((t) => t.id !== trackId);
 	}
 
-	function moveTrack(trackId: string, direction: 'up' | 'down') {
+	async function saveTrackOrder(previousTracks: typeof tracks) {
+		const orderedIds = tracks.map((track) => track.id);
+		const formData = new FormData();
+		formData.set('orderedIds', JSON.stringify(orderedIds));
+
+		const response = await fetch('?/reorder', {
+			method: 'POST',
+			body: formData
+		});
+
+		if (!response.ok) {
+			tracks = previousTracks;
+			reorderError = 'Unable to save track order. Please try again.';
+		}
+	}
+
+	async function moveTrack(trackId: string, direction: 'up' | 'down') {
+		if (isSavingOrder) return;
+
 		const index = tracks.findIndex((t) => t.id === trackId);
 		if (index === -1) return;
 
-		if (direction === 'up' && index > 0) {
-			[tracks[index], tracks[index - 1]] = [tracks[index - 1], tracks[index]];
-		} else if (direction === 'down' && index < tracks.length - 1) {
-			[tracks[index], tracks[index + 1]] = [tracks[index + 1], tracks[index]];
+		const newIndex = direction === 'up' ? index - 1 : index + 1;
+		if (newIndex < 0 || newIndex >= tracks.length) return;
+
+		const previousTracks = [...tracks];
+		const nextTracks = [...tracks];
+
+		[nextTracks[index], nextTracks[newIndex]] = [nextTracks[newIndex], nextTracks[index]];
+		tracks = nextTracks;
+		reorderError = null;
+
+		isSavingOrder = true;
+		try {
+			await saveTrackOrder(previousTracks);
+		} finally {
+			isSavingOrder = false;
 		}
 	}
 </script>
@@ -67,6 +94,9 @@
 			Add Track
 		</a>
 	</div>
+	{#if reorderError}
+		<p class="px-6 py-3 text-sm text-red-600">{reorderError}</p>
+	{/if}
 
 	<!-- Track List -->
 	<div class="divide-surface-subtle divide-y">

@@ -19,7 +19,6 @@
  */
 
 import { writable } from 'svelte/store';
-
 import { AudioEngine } from '$lib/audio/audio-engine.svelte';
 import type { AudioTrack } from '$lib/audio/playback-state';
 import { frequencyStore } from './audio-frequency-store.svelte';

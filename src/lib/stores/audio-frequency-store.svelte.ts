@@ -206,10 +206,8 @@ export const frequencyStore = {
 		if (analyser) {
 			const buffer = new ArrayBuffer(analyser.frequencyBinCount);
 			dataArray = new Uint8Array(buffer);
-			console.log('[FrequencyStore] Analyser set, frequencyBinCount:', analyser.frequencyBinCount);
 			// Auto-start if we have subscribers
 			if (subscriberCount > 0) {
-				console.log('[FrequencyStore] Auto-starting analysis');
 				startAnalysis();
 			}
 		} else {
