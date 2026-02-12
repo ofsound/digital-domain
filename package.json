@@ -16,7 +16,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "netlify dev:exec drizzle-kit studio"
+    "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.2",
