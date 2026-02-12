@@ -13,7 +13,7 @@
 </script>
 
 <nav
-	class="border-surface-subtle bg-surface/95 fixed top-0 right-0 left-0 z-30 border-b backdrop-blur-sm"
+	class="border-surface-subtle bg-surface/95 fixed top-0 right-0 left-0 z-[60] border-b backdrop-blur-sm"
 >
 	<div class="mx-auto max-w-6xl px-4">
 		<div class="flex h-16 items-center justify-between">
