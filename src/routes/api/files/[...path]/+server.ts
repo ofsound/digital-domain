@@ -1,7 +1,52 @@
-import { getStore } from '@netlify/blobs';
+import { getStore, type GetStoreOptions } from '@netlify/blobs';
 import { error } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 
 import type { RequestHandler } from './$types';
+
+/**
+ * Parse NETLIFY_BLOBS_CONTEXT if available
+ */
+function parseBlobsContext(): Partial<GetStoreOptions> | null {
+	const context = env.NETLIFY_BLOBS_CONTEXT;
+	if (!context) return null;
+
+	try {
+		const decoded = Buffer.from(context, 'base64').toString('utf-8');
+		const config = JSON.parse(decoded);
+		return {
+			apiURL: config.apiURL,
+			edgeURL: config.edgeURL,
+			token: config.token,
+			siteID: config.siteID
+		};
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Get store configuration from environment
+ */
+function getStoreConfig(): Partial<GetStoreOptions> {
+	// Try NETLIFY_BLOBS_CONTEXT first
+	const contextConfig = parseBlobsContext();
+	if (contextConfig) {
+		return contextConfig;
+	}
+
+	// Fall back to individual env vars
+	if (env.NETLIFY_SITE_ID && env.NETLIFY_API_TOKEN) {
+		return {
+			siteID: env.NETLIFY_SITE_ID,
+			token: env.NETLIFY_API_TOKEN,
+			apiURL: 'https://api.netlify.com'
+		};
+	}
+
+	// Empty config - let @netlify/blobs try to auto-detect
+	return {};
+}
 
 /**
  * Serve files from Netlify Blobs
@@ -21,7 +66,13 @@ export const GET: RequestHandler = async ({ params }) => {
 	try {
 		// Determine which store to use based on path
 		const storeName = filePath.startsWith('images/') ? 'images' : 'audio-files';
-		const store = getStore({ name: storeName });
+
+		// Get store with proper configuration
+		const storeConfig = getStoreConfig();
+		const store = getStore({
+			name: storeName,
+			...storeConfig
+		});
 
 		// Fetch the blob
 		const blob = await store.get(filePath, { type: 'arrayBuffer' });
