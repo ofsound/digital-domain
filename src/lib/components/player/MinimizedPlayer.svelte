@@ -2,25 +2,15 @@
 	import { playerStore } from '$lib/stores/player-store.svelte';
 	import { formatTime } from '$lib/audio/format-time';
 
-	let progressRef = $state<HTMLDivElement | null>(null);
-
-	function progressBarAction(node: HTMLDivElement) {
-		progressRef = node;
-		return {
-			destroy() {
-				progressRef = null;
-			}
-		};
-	}
-
 	const progressPercentage = $derived(
 		playerStore.duration > 0 ? (playerStore.currentTime / playerStore.duration) * 100 : 0
 	);
 
 	function handleProgressClick(event: MouseEvent) {
-		if (!progressRef || playerStore.duration === 0) return;
+		if (playerStore.duration === 0) return;
 
-		const rect = progressRef.getBoundingClientRect();
+		const target = event.currentTarget as HTMLElement;
+		const rect = target.getBoundingClientRect();
 		const x = event.clientX - rect.left;
 		const percentage = Math.max(0, Math.min(1, x / rect.width));
 		const time = percentage * playerStore.duration;
@@ -47,33 +37,62 @@
 
 <div class="bg-surface-elevated fixed inset-x-0 bottom-0 z-40 shadow-2xl">
 	<div class="flex items-center gap-4 px-4 py-3">
-		<!-- Play/Pause Button -->
-		<button
-			type="button"
-			class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-t from-violet-600 to-cyan-500 text-white shadow-md transition-all hover:brightness-90 active:scale-95"
-			onclick={() => playerStore.togglePlayPause()}
-			aria-label={playerStore.isPlaying ? 'Pause' : 'Play'}
-		>
-			{#if playerStore.isLoading}
-				<svg class="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
-					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
-					></circle>
-					<path
-						class="opacity-75"
-						fill="currentColor"
-						d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-					></path>
+		<!-- Transport Controls (Prev, Play/Pause, Next) -->
+		<div class="flex items-center gap-1">
+			<!-- Previous Button -->
+			<button
+				type="button"
+				class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-t from-violet-600 to-cyan-500 text-white shadow-md transition-all hover:brightness-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+				onclick={() => playerStore.previousTrack()}
+				disabled={!playerStore.canGoPrevious}
+				aria-label="Previous track"
+			>
+				<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
 				</svg>
-			{:else if playerStore.isPlaying}
-				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-					<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+			</button>
+
+			<!-- Play/Pause Button -->
+			<button
+				type="button"
+				class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-t from-violet-600 to-cyan-500 text-white shadow-md transition-all hover:brightness-90 active:scale-95"
+				onclick={() => playerStore.togglePlayPause()}
+				aria-label={playerStore.isPlaying ? 'Pause' : 'Play'}
+			>
+				{#if playerStore.isLoading}
+					<svg class="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
+						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+						></circle>
+						<path
+							class="opacity-75"
+							fill="currentColor"
+							d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+						></path>
+					</svg>
+				{:else if playerStore.isPlaying}
+					<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+					</svg>
+				{:else}
+					<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M8 5v14l11-7z" />
+					</svg>
+				{/if}
+			</button>
+
+			<!-- Next Button -->
+			<button
+				type="button"
+				class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-t from-violet-600 to-cyan-500 text-white shadow-md transition-all hover:brightness-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+				onclick={() => playerStore.nextTrack()}
+				disabled={!playerStore.canGoNext}
+				aria-label="Next track"
+			>
+				<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
 				</svg>
-			{:else}
-				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-					<path d="M8 5v14l11-7z" />
-				</svg>
-			{/if}
-		</button>
+			</button>
+		</div>
 
 		<!-- Track Info -->
 		<div class="min-w-0 flex-1">
@@ -89,7 +108,6 @@
 
 		<!-- Progress Bar (Clickable) -->
 		<div
-			use:progressBarAction
 			class="hidden flex-1 cursor-pointer md:block"
 			onclick={handleProgressClick}
 			onkeydown={handleKeyDown}

@@ -233,6 +233,14 @@ export const playerStore = {
 		return getEngine()?.isLoopEnabled ?? false;
 	},
 
+	get canGoPrevious(): boolean {
+		return getEngine()?.canGoPrevious ?? false;
+	},
+
+	get canGoNext(): boolean {
+		return getEngine()?.canGoNext ?? false;
+	},
+
 	/**
 	 * View state - maximized or minimized
 	 */

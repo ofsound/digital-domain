@@ -1041,23 +1041,48 @@ export class AudioEngine {
 
 	/**
 	 * Calculate the next track index.
+	 * Does not wrap around - stops at the last track.
 	 */
 	private getNextTrackIndex(): number {
 		if (this.isShuffleEnabled) {
 			return this.getRandomUnplayedTrack();
 		}
-		return (this.currentTrackIndex + 1) % this.buffers.length;
+		return Math.min(this.currentTrackIndex + 1, this.buffers.length - 1);
 	}
 
 	/**
 	 * Calculate the previous track index.
+	 * Does not wrap around - stops at track 0.
 	 */
 	private getPreviousTrackIndex(): number {
 		if (this.isShuffleEnabled && this.playedIndices.length > 0) {
 			this.playedIndices.pop();
 			return this.playedIndices.pop() ?? 0;
 		}
-		return this.currentTrackIndex > 0 ? this.currentTrackIndex - 1 : this.buffers.length - 1;
+		return Math.max(0, this.currentTrackIndex - 1);
+	}
+
+	/**
+	 * Check if we can go to the previous track.
+	 */
+	get canGoPrevious(): boolean {
+		if (this.buffers.length === 0) return false;
+		if (this.isShuffleEnabled) {
+			return this.playedIndices.length > 0;
+		}
+		return this.currentTrackIndex > 0;
+	}
+
+	/**
+	 * Check if we can go to the next track.
+	 */
+	get canGoNext(): boolean {
+		if (this.buffers.length === 0) return false;
+		if (this.isShuffleEnabled) {
+			const unplayed = this.buffers.map((_, i) => i).filter((i) => !this.playedIndices.includes(i));
+			return unplayed.length > 0;
+		}
+		return this.currentTrackIndex < this.buffers.length - 1;
 	}
 
 	/**
@@ -1087,17 +1112,28 @@ export class AudioEngine {
 		const nextIndex = this.getNextTrackIndex();
 
 		this.fadeOut(() => {
-			this.currentTrackIndex = nextIndex;
-			this.currentTime = 0;
-
-			if (this.buffers[nextIndex]) {
-				this.duration = this.buffers[nextIndex].duration;
-			}
-
-			if (nextIndex === 0 && this.playedIndices.length >= this.buffers.length) {
+			// Check if we've reached the end of the playlist
+			if (nextIndex === this.currentTrackIndex) {
 				if (this.isLoopEnabled) {
+					// Loop back to the first track
+					this.currentTrackIndex = 0;
+					this.currentTime = 0;
 					this.playedIndices = [];
+					if (this.buffers[0]) {
+						this.duration = this.buffers[0].duration;
+					}
+					this.armAudio(0, () => {
+						if (this.source && this.audioContext) {
+							this.source.start(0);
+							this.sourceHasStarted = true;
+							this.startTime = this.audioContext.currentTime;
+							this.isPlaying = true;
+							this.fadeIn();
+						}
+					});
+					return;
 				} else {
+					// Stop at the end of the playlist
 					this.isPlaying = false;
 					this.isFirstPlay = true;
 					this.playedIndices = [];
@@ -1106,6 +1142,13 @@ export class AudioEngine {
 					}
 					return;
 				}
+			}
+
+			this.currentTrackIndex = nextIndex;
+			this.currentTime = 0;
+
+			if (this.buffers[nextIndex]) {
+				this.duration = this.buffers[nextIndex].duration;
 			}
 
 			this.armAudio(nextIndex, () => {
