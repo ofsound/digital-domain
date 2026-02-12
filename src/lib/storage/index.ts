@@ -29,11 +29,17 @@ import type { StorageProvider } from './types';
 
 /**
  * Detect if we're running in production on Netlify
- * Uses SvelteKit's env import for proper runtime detection
+ * Uses multiple detection methods for reliability
  */
 function isNetlifyProduction(): boolean {
 	// Check for Netlify environment variables at runtime
-	return !!(env.NETLIFY || env.NETLIFY_BLOBS_CONTEXT || env.NETLIFY_SITE_ID);
+	const hasNetlifyEnv = !!(env.NETLIFY || env.NETLIFY_BLOBS_CONTEXT || env.NETLIFY_SITE_ID);
+
+	// Check if we're in a serverless environment (Netlify Functions use /var/task)
+	const isServerlessEnvironment =
+		typeof process !== 'undefined' && process.cwd && process.cwd().includes('/var/task');
+
+	return hasNetlifyEnv || isServerlessEnvironment;
 }
 
 /**
@@ -42,10 +48,12 @@ function isNetlifyProduction(): boolean {
 function createStorage(): StorageProvider {
 	// Use Netlify Blobs in production on Netlify
 	if (isNetlifyProduction()) {
+		console.log('[Storage] Using NetlifyBlobsProvider for production');
 		return new NetlifyBlobsProvider();
 	}
 
 	// Default to local filesystem for development and other environments
+	console.log('[Storage] Using LocalStorageProvider for development');
 	return new LocalStorageProvider();
 }
 
