@@ -27,35 +27,48 @@ import { NetlifyBlobsProvider } from './providers/netlify-blobs';
 
 import type { StorageProvider } from './types';
 
+// Cache the provider instance
+let storageInstance: StorageProvider | null = null;
+
 /**
  * Detect if we're running in production on Netlify
- * Uses multiple detection methods for reliability
  */
 function isNetlifyProduction(): boolean {
-	// Check for Netlify environment variables at runtime
+	// Check environment variables
 	const hasNetlifyEnv = !!(env.NETLIFY || env.NETLIFY_BLOBS_CONTEXT || env.NETLIFY_SITE_ID);
 
-	// Check if we're in a serverless environment (Netlify Functions use /var/task)
-	const isServerlessEnvironment =
+	// Check if we're in a serverless environment
+	const isServerless =
 		typeof process !== 'undefined' && process.cwd && process.cwd().includes('/var/task');
 
-	return hasNetlifyEnv || isServerlessEnvironment;
+	return hasNetlifyEnv || isServerless;
 }
 
 /**
- * Create the appropriate storage provider based on environment
+ * Get or create the storage provider
+ * Uses lazy initialization to ensure env vars are available
  */
-function createStorage(): StorageProvider {
-	// Use Netlify Blobs in production on Netlify
-	if (isNetlifyProduction()) {
-		console.log('[Storage] Using NetlifyBlobsProvider for production');
-		return new NetlifyBlobsProvider();
+function getStorage(): StorageProvider {
+	if (!storageInstance) {
+		if (isNetlifyProduction()) {
+			console.log('[Storage] Initializing NetlifyBlobsProvider');
+			storageInstance = new NetlifyBlobsProvider();
+		} else {
+			console.log('[Storage] Initializing LocalStorageProvider');
+			storageInstance = new LocalStorageProvider();
+		}
 	}
-
-	// Default to local filesystem for development and other environments
-	console.log('[Storage] Using LocalStorageProvider for development');
-	return new LocalStorageProvider();
+	return storageInstance;
 }
 
-// Singleton instance
-export const storage = createStorage();
+/**
+ * Storage proxy that lazily initializes the provider
+ * This ensures environment variables are available when checked
+ */
+export const storage: StorageProvider = {
+	save: (file, path) => getStorage().save(file, path),
+	getPublicUrl: (path) => getStorage().getPublicUrl(path),
+	delete: (path) => getStorage().delete(path),
+	exists: (path) => getStorage().exists(path),
+	list: (prefix) => getStorage().list(prefix)
+};
