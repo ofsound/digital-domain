@@ -153,7 +153,7 @@
 	<div class="relative flex min-h-screen flex-col items-center justify-center px-8 py-20">
 		<!-- Background pulsing orbs -->
 		<div class="pointer-events-none absolute inset-0 overflow-hidden">
-			{#each Array(5) as i (i)}
+			{#each Array.from({ length: 5 }, (_, i) => i) as i (i)}
 				<div
 					class="absolute rounded-full opacity-20 blur-3xl"
 					style="

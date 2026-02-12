@@ -409,7 +409,7 @@
 				"
 			>
 				<!-- Content Cards -->
-				{#each Array(6) as i (i)}
+				{#each Array.from({ length: 6 }, (_, i) => i) as i (i)}
 					<div
 						class="flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-4 transition-all duration-300"
 						style="
@@ -483,7 +483,7 @@
 
 			<!-- Visual Elements -->
 			<div class="flex flex-1 flex-col gap-3">
-				{#each Array(4) as i (i)}
+				{#each Array.from({ length: 4 }, (_, i) => i) as i (i)}
 					<div
 						class="relative flex-1 overflow-hidden rounded-lg bg-white/5"
 						style="

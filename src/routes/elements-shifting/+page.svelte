@@ -190,7 +190,7 @@
 				transform: rotateX(20deg) rotateY(-10deg);
 			"
 		>
-			{#each Array(TOTAL_ELEMENTS) as index (index)}
+			{#each Array.from({ length: TOTAL_ELEMENTS }, (_, i) => i) as index (index)}
 				<div
 					bind:this={elementRefs[index]}
 					class="grid-element relative h-16 w-16 rounded-lg backdrop-blur-sm md:h-20 md:w-20"
@@ -229,7 +229,7 @@
 							background: {band.isActive ? 'linear-gradient(90deg, #a855f7, #ec4899)' : 'rgba(255,255,255,0.3)'};
 							box-shadow: {band.isActive ? '0 0 20px rgba(236,72,153,0.8)' : 'none'};
 						"
-					/>
+					></div>
 				</div>
 				<span class="text-xs tracking-wider text-white/40 uppercase">{band.name}</span>
 			</div>
@@ -238,7 +238,7 @@
 
 	<!-- Ambient particles -->
 	<div class="pointer-events-none absolute inset-0 overflow-hidden">
-		{#each Array(20) as i (i)}
+		{#each Array.from({ length: 20 }, (_, i) => i) as i (i)}
 			<div
 				class="absolute h-1 w-1 rounded-full bg-white/30"
 				style="
@@ -247,7 +247,7 @@
 					animation: particle-float {5 + Math.random() * 10}s ease-in-out infinite;
 					animation-delay: {Math.random() * 5}s;
 				"
-			/>
+			></div>
 		{/each}
 	</div>
 </div>

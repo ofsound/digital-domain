@@ -35,7 +35,7 @@
 	}
 </script>
 
-<div class="bg-surface-elevated fixed inset-x-0 bottom-0 z-40 shadow-2xl">
+<div class="bg-surface-elevated w-full shadow-2xl">
 	<div class="flex items-center gap-4 px-4 py-3">
 		<!-- Transport Controls (Prev, Play/Pause, Next) -->
 		<div class="flex items-center gap-1">

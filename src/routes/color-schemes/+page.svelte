@@ -427,7 +427,7 @@
 				"
 			>
 				<!-- Animated inner glow rings -->
-				{#each Array(3) as i (i)}
+				{#each Array.from({ length: 3 }, (_, i) => i) as i (i)}
 					<div
 						class="pointer-events-none absolute rounded-full"
 						style="

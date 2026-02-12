@@ -8,13 +8,12 @@
 		{ href: '/', label: 'Player' },
 		{ href: '/photos', label: 'Photos' },
 		{ href: '/artwork', label: 'Artwork' },
-		{ href: '/contact', label: 'Contact' }
+		{ href: '/contact', label: 'Contact' },
+		{ href: '/examples', label: 'Examples' }
 	] as const;
 </script>
 
-<nav
-	class="border-surface-subtle bg-surface/95 fixed top-0 right-0 left-0 z-[60] border-b backdrop-blur-sm"
->
+<nav class="border-surface-subtle bg-surface/95 border-b backdrop-blur-sm">
 	<div class="mx-auto max-w-6xl px-4">
 		<div class="flex h-16 items-center justify-between">
 			<a href={resolve('/')} class="text-text-primary hidden text-xl font-bold">Digital Domain</a>

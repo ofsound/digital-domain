@@ -14,7 +14,7 @@
 
 {#if isVisible}
 	<div
-		class="bg-surface-elevated fixed inset-x-0 bottom-0 z-50 max-h-[70vh] overflow-y-auto shadow-2xl transition-transform duration-300 ease-out"
+		class="bg-surface-elevated max-h-[70vh] w-full overflow-y-auto shadow-2xl transition-transform duration-300 ease-out"
 	>
 		<div class="flex justify-center pt-3 pb-2 md:hidden">
 			<div class="bg-surface-subtle h-1 w-12 rounded-full"></div>

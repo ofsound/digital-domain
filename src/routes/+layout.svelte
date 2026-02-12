@@ -20,15 +20,12 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<div class="bg-surface min-h-screen">
-	<!-- Navigation -->
+<div class="bg-surface flex h-dvh max-h-dvh flex-col overflow-hidden">
 	<Navigation />
 
-	<!-- Main Content - with padding for fixed nav -->
-	<main class="pt-16">
+	<main class="min-h-0 flex-1 overflow-y-auto">
 		{@render children()}
 	</main>
-</div>
 
-<!-- Persistent Player - always present at bottom -->
-<PersistentPlayer initialTracks={playerTracks} />
+	<PersistentPlayer initialTracks={playerTracks} />
+</div>

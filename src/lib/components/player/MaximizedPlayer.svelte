@@ -130,7 +130,7 @@
 
 <svelte:window onkeydown={handleKeyDown} />
 
-<div class="bg-surface fixed inset-0 z-50 flex flex-col">
+<div class="bg-surface flex max-h-full flex-col overflow-hidden">
 	<!-- Error Banner -->
 	{#if playerStore.error}
 		<div class="flex items-center justify-between bg-red-500 px-4 py-3 text-white">

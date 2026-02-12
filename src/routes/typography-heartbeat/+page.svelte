@@ -319,7 +319,7 @@
 <div class="min-h-screen overflow-hidden bg-black text-white">
 	<!-- Background pulse rings -->
 	<div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-		{#each Array(3) as i (i)}
+		{#each Array.from({ length: 3 }, (_, i) => i) as i (i)}
 			<div
 				class="absolute rounded-full border opacity-20"
 				style="
