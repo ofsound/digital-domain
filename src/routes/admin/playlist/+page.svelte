@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+	import { TRACK_ANIMATION_OPTIONS } from '$lib/track-animations/catalog';
+
 	import type { PageData } from './$types';
 
 	interface Props {
@@ -31,6 +34,10 @@
 
 	function deleteTrack(trackId: string) {
 		tracks = tracks.filter((t) => t.id !== trackId);
+	}
+
+	function getPreviewUrl(videoUrl: string): string {
+		return new URL(videoUrl, page.url.origin).toString();
 	}
 
 	async function saveTrackOrder(previousTracks: typeof tracks) {
@@ -151,6 +158,87 @@
 							<p class="text-text-secondary truncate text-sm">{track.url}</p>
 						</div>
 					{/if}
+
+					<div class="mt-3 flex flex-wrap items-center gap-2">
+						<p class="text-text-secondary text-xs">
+							Background video: {track.videoUrl ? 'Configured' : 'Not set'}
+						</p>
+						{#if track.videoUrl}
+							<button
+								type="button"
+								onclick={() =>
+									window.open(getPreviewUrl(track.videoUrl!), '_blank', 'noopener,noreferrer')}
+								class="text-xs text-violet-600 hover:underline"
+							>
+								Preview
+							</button>
+						{/if}
+					</div>
+
+					<div class="mt-2 flex flex-wrap items-center gap-2">
+						<form
+							method="POST"
+							action="?/setVideo"
+							enctype="multipart/form-data"
+							class="flex flex-wrap items-center gap-2"
+						>
+							<input type="hidden" name="trackId" value={track.id} />
+							<input
+								type="file"
+								name="video"
+								accept=".mp4,video/mp4"
+								required
+								class="text-text-secondary block text-xs file:mr-2 file:rounded-full file:border-0 file:bg-cyan-600 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-cyan-700"
+							/>
+							<button
+								type="submit"
+								class="rounded bg-cyan-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-cyan-700"
+							>
+								{track.videoUrl ? 'Replace Video' : 'Add Video'}
+							</button>
+						</form>
+
+						{#if track.videoUrl}
+							<form method="POST" action="?/removeVideo">
+								<input type="hidden" name="trackId" value={track.id} />
+								<button
+									type="submit"
+									class="rounded bg-red-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-red-700"
+								>
+									Remove Video
+								</button>
+							</form>
+						{/if}
+					</div>
+
+					<div class="mt-3 flex flex-wrap items-center gap-2">
+						<p class="text-text-secondary text-xs">
+							Track animation: {track.animationKey ?? 'Not set'}
+						</p>
+					</div>
+
+					<div class="mt-2 flex flex-wrap items-center gap-2">
+						<form method="POST" action="?/setAnimation" class="flex flex-wrap items-center gap-2">
+							<input type="hidden" name="trackId" value={track.id} />
+							<select
+								name="animationKey"
+								class="border-surface-subtle bg-surface text-text-primary rounded border px-3 py-1.5 text-xs focus:border-violet-600 focus:outline-none"
+							>
+								<option value="">None</option>
+								{#each TRACK_ANIMATION_OPTIONS as option (option.key)}
+									<option value={option.key} selected={track.animationKey === option.key}>
+										{option.label}
+									</option>
+								{/each}
+							</select>
+							<button
+								type="submit"
+								class="rounded bg-violet-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-violet-700"
+							>
+								Save Animation
+							</button>
+						</form>
+					</div>
 				</div>
 
 				<!-- Actions -->

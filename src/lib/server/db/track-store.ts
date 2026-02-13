@@ -17,6 +17,10 @@ interface TrackWithRelations extends Track {
 	audioFiles: (typeof trackAudioFiles.$inferSelect)[];
 }
 
+function getStoragePathFromUrl(url: string): string {
+	return url.replace(/^\/api\/files\//, '').replace(/^\//, '');
+}
+
 export const trackStore = {
 	/**
 	 * Get all tracks with their relations, ordered by sort_order
@@ -124,18 +128,24 @@ export const trackStore = {
 		if (!track) return false;
 
 		// Delete main audio file from storage
-		const mainPath = track.url.replace(/^\/audio\//, '');
+		const mainPath = getStoragePathFromUrl(track.url);
 		await storage.delete(mainPath).catch(console.error);
+
+		// Delete background video from storage
+		if (track.videoUrl) {
+			const videoPath = getStoragePathFromUrl(track.videoUrl);
+			await storage.delete(videoPath).catch(console.error);
+		}
 
 		// Delete images from storage
 		for (const image of track.images) {
-			const imagePath = image.url.replace(/^\/images\//, '');
+			const imagePath = getStoragePathFromUrl(image.url);
 			await storage.delete(imagePath).catch(console.error);
 		}
 
 		// Delete additional audio files from storage
 		for (const audioFile of track.audioFiles) {
-			const audioPath = audioFile.url.replace(/^\/audio\//, '');
+			const audioPath = getStoragePathFromUrl(audioFile.url);
 			await storage.delete(audioPath).catch(console.error);
 		}
 
@@ -227,7 +237,7 @@ export const trackStore = {
 		if (!image) return false;
 
 		// Delete from storage
-		const imagePath = image.url.replace(/^\/images\//, '');
+		const imagePath = getStoragePathFromUrl(image.url);
 		await storage.delete(imagePath).catch(console.error);
 
 		// Delete from database
@@ -248,7 +258,7 @@ export const trackStore = {
 		if (!audioFile) return false;
 
 		// Delete from storage
-		const audioPath = audioFile.url.replace(/^\/audio\//, '');
+		const audioPath = getStoragePathFromUrl(audioFile.url);
 		await storage.delete(audioPath).catch(console.error);
 
 		// Delete from database

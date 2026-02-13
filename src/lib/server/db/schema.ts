@@ -36,6 +36,8 @@ export const tracks = pgTable(
 		name: varchar('name', { length: 255 }).notNull(),
 		slug: varchar('slug', { length: 255 }).notNull().unique(),
 		url: text('url').notNull(), // Main audio file URL
+		videoUrl: text('video_url'), // Optional background video URL
+		animationKey: varchar('animation_key', { length: 64 }), // Optional background animation key
 		description: text('description').default(''), // Rich text HTML
 		sortOrder: integer('sort_order').default(0).notNull(),
 		frequencyConfig: jsonb('frequency_config').$type<TrackFrequencyConfig | null>(), // Per-track frequency bin configuration

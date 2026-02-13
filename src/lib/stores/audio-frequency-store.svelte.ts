@@ -283,18 +283,16 @@ export const frequencyStore = {
 	 */
 	subscribe(): () => void {
 		subscriberCount++;
-		console.log('[FrequencyStore] Subscribed, count:', subscriberCount, 'analyser:', !!analyser);
+		// console.log('[FrequencyStore] Subscribed, count:', subscriberCount, 'analyser:', !!analyser);
 
 		// Auto-start if we have an analyser
 		if (analyser && !isRunning) {
-			console.log('[FrequencyStore] Starting analysis from subscribe');
 			startAnalysis();
 		}
 
 		// Return unsubscribe function
 		return () => {
 			subscriberCount--;
-			console.log('[FrequencyStore] Unsubscribed, count:', subscriberCount);
 			// Auto-stop if no more subscribers
 			if (subscriberCount <= 0) {
 				stopAnalysis();

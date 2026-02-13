@@ -15,6 +15,20 @@
       "when": 1770915443616,
       "tag": "0001_special_stryfe",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1770937424928,
+      "tag": "0002_overjoyed_absorbing_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1770939333545,
+      "tag": "0003_nostalgic_white_queen",
+      "breakpoints": true
     }
   ]
 }

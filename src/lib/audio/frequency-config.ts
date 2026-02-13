@@ -72,7 +72,7 @@ export function createDefaultFrequencyConfig(trackId: string): TrackFrequencyCon
 /**
  * Validates a frequency band configuration
  */
-export function isValidBandConfig(band: unknown): band is FrequencyBandConfig {
+function isValidBandConfig(band: unknown): band is FrequencyBandConfig {
 	if (typeof band !== 'object' || band === null) return false;
 	const b = band as Record<string, unknown>;
 	return (

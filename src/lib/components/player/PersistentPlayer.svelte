@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { onMount, type Component } from 'svelte';
+
 	import { playerStore } from '$lib/stores/player-store.svelte';
+
+	import type { AudioTrack } from '$lib/audio/playback-state';
 
 	interface Props {
 		/** Initial tracks to load (optional) */
-		initialTracks?: Array<{ id: string; name: string; url: string }>;
+		initialTracks?: AudioTrack[];
 	}
 
 	let { initialTracks }: Props = $props();

@@ -17,12 +17,15 @@ export enum PlaybackState {
 }
 
 import type { TrackFrequencyConfig } from './frequency-config';
+import type { TrackAnimationKey } from '$lib/track-animations/catalog';
 
 /** Audio track metadata for multi-track loading */
 export interface AudioTrack {
 	id: string;
 	name: string;
 	url: string;
+	videoUrl?: string | null;
+	animationKey?: TrackAnimationKey | null;
 	/** Optional frequency configuration for reactive animations */
 	frequencyConfig?: TrackFrequencyConfig;
 }

@@ -1,5 +1,6 @@
 import { storage } from '$lib/storage';
 import { trackStore } from '$lib/server/db/track-store';
+import { isTrackAnimationKey, type TrackAnimationKey } from '$lib/track-animations/catalog';
 import { generateTrackSlug } from '$lib/utils/slug';
 
 /**
@@ -11,6 +12,25 @@ export async function uploadTrack({ request }: { request: Request }) {
 		const mainAudio = formData.get('audio') as File;
 		const name = formData.get('name') as string;
 		const description = formData.get('description') as string;
+		const animationKeyEntry = formData.get('animationKey');
+		const backgroundVideoEntry = formData.get('backgroundVideo');
+		const backgroundVideo =
+			backgroundVideoEntry instanceof File && backgroundVideoEntry.size > 0
+				? backgroundVideoEntry
+				: null;
+		let animationKey: TrackAnimationKey | null = null;
+
+		if (typeof animationKeyEntry === 'string' && animationKeyEntry.trim().length > 0) {
+			const normalizedAnimationKey = animationKeyEntry.trim();
+			if (!isTrackAnimationKey(normalizedAnimationKey)) {
+				return {
+					success: false,
+					error: 'Invalid animation selection'
+				};
+			}
+
+			animationKey = normalizedAnimationKey;
+		}
 
 		// Handle multiple images
 		const images: File[] = [];
@@ -45,13 +65,30 @@ export async function uploadTrack({ request }: { request: Request }) {
 			};
 		}
 
+		if (
+			backgroundVideo &&
+			!backgroundVideo.type.includes('video/mp4') &&
+			!backgroundVideo.name.toLowerCase().endsWith('.mp4')
+		) {
+			return {
+				success: false,
+				error: 'Background video must be MP4'
+			};
+		}
+
 		// Generate safe filename for main audio
 		const timestamp = Date.now();
-		const safeName = name.replace(/[^a-zA-Z0-9\-_]/g, '_');
+		const safeName = (name || 'untitled').replace(/[^a-zA-Z0-9\-_]/g, '_');
 		const mainAudioFilename = `${timestamp}_${safeName}.mp3`;
 
 		// Save main audio file
 		const mainAudioUrl = await storage.save(mainAudio, mainAudioFilename);
+
+		let videoUrl: string | null = null;
+		if (backgroundVideo) {
+			const videoFilename = `${timestamp}_${safeName}_video.mp4`;
+			videoUrl = await storage.save(backgroundVideo, `videos/${videoFilename}`);
+		}
 
 		// Generate unique slug
 		const slug = generateTrackSlug(name || 'untitled');
@@ -61,6 +98,8 @@ export async function uploadTrack({ request }: { request: Request }) {
 			name: name || 'Untitled Track',
 			slug,
 			url: mainAudioUrl,
+			videoUrl,
+			animationKey,
 			description: description || ''
 		});
 
@@ -100,6 +139,8 @@ export async function uploadTrack({ request }: { request: Request }) {
 				id: track.id,
 				name: track.name,
 				url: track.url,
+				videoUrl: track.videoUrl,
+				animationKey: track.animationKey,
 				description: track.description,
 				images: uploadedImages,
 				audioFiles: uploadedAudioFiles

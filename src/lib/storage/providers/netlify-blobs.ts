@@ -13,7 +13,8 @@ import type { StorageProvider } from '../types';
 // Store names for organizing different types of content
 const STORES = {
 	audio: 'audio-files',
-	images: 'images'
+	images: 'images',
+	videos: 'videos'
 } as const;
 
 /**
@@ -88,10 +89,20 @@ export class NetlifyBlobsProvider implements StorageProvider {
 		});
 	}
 
+	private getVideosStore() {
+		return getStore({
+			name: STORES.videos,
+			...this.storeConfig
+		});
+	}
+
 	private getStoreForPath(path: string) {
 		// Route files to appropriate stores based on path
 		if (path.startsWith('images/') || path.includes('/images/')) {
 			return this.getImagesStore();
+		}
+		if (path.startsWith('videos/') || path.includes('/videos/')) {
+			return this.getVideosStore();
 		}
 		return this.getAudioStore();
 	}

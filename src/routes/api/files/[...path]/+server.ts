@@ -65,7 +65,11 @@ export const GET: RequestHandler = async ({ params }) => {
 
 	try {
 		// Determine which store to use based on path
-		const storeName = filePath.startsWith('images/') ? 'images' : 'audio-files';
+		const storeName = filePath.startsWith('images/')
+			? 'images'
+			: filePath.startsWith('videos/')
+				? 'videos'
+				: 'audio-files';
 
 		// Get store with proper configuration
 		const storeConfig = getStoreConfig();
@@ -108,6 +112,7 @@ function getContentType(filename: string): string {
 		wav: 'audio/wav',
 		ogg: 'audio/ogg',
 		m4a: 'audio/mp4',
+		mp4: 'video/mp4',
 		jpg: 'image/jpeg',
 		jpeg: 'image/jpeg',
 		png: 'image/png',
